@@ -1,0 +1,2 @@
+# MemoryViewer
+Windows環境にてゲーム中にUnityメモリ使用量を調べるライブラリです。
