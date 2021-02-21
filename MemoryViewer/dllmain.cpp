@@ -18,17 +18,17 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-long GetWorkingSet()
+unsigned long GetWorkingSet()
 {
 	PROCESS_MEMORY_COUNTERS info;
 	if (!GetProcessMemoryInfo(GetCurrentProcess(), &info, sizeof(info)))
 	{
-		return -1;
+		return 0;
 	}
-	return (SIZE_T)info.WorkingSetSize;
+	return info.WorkingSetSize;
 }
 
-long GetCommitSize()
+unsigned long GetCommitSize()
 {
 	PROCESS_MEMORY_COUNTERS_EX info;
 	if (!GetProcessMemoryInfo(
@@ -37,7 +37,7 @@ long GetCommitSize()
 		sizeof(info)
 	))
 	{
-		return -1;
+		return 0;
 	}
-	return (SIZE_T)info.PrivateUsage;
+	return info.PrivateUsage;
 }
