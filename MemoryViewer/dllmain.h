@@ -2,6 +2,6 @@
 
 extern "C"
 {
-	__declspec(dllexport) unsigned long GetWorkingSet();
-	__declspec(dllexport) unsigned long GetCommitSize();
+	__declspec(dllexport) SIZE_T GetWorkingSet();
+	__declspec(dllexport) SIZE_T GetCommitSize();
 }

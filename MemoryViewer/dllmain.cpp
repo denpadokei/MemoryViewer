@@ -18,7 +18,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-unsigned long GetWorkingSet()
+SIZE_T GetWorkingSet()
 {
 	PROCESS_MEMORY_COUNTERS info;
 	if (!GetProcessMemoryInfo(GetCurrentProcess(), &info, sizeof(info)))
@@ -28,7 +28,7 @@ unsigned long GetWorkingSet()
 	return info.WorkingSetSize;
 }
 
-unsigned long GetCommitSize()
+SIZE_T GetCommitSize()
 {
 	PROCESS_MEMORY_COUNTERS_EX info;
 	if (!GetProcessMemoryInfo(
