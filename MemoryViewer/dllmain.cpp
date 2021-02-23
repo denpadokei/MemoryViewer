@@ -1,6 +1,7 @@
 ﻿// dllmain.cpp : DLL アプリケーションのエントリ ポイントを定義します。
 #include "pch.h"
 #include "dllmain.h"
+#include <exception>
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -21,23 +22,27 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 SIZE_T GetWorkingSet()
 {
 	PROCESS_MEMORY_COUNTERS info;
-	if (!GetProcessMemoryInfo(GetCurrentProcess(), &info, sizeof(info)))
+	HANDLE currentProcess;
+	currentProcess = GetCurrentProcess();
+	if (!GetProcessMemoryInfo(currentProcess, &info, sizeof(info)))
 	{
+		CloseHandle(currentProcess);
 		return 0;
 	}
+	CloseHandle(currentProcess);
 	return info.WorkingSetSize;
 }
 
 SIZE_T GetCommitSize()
 {
 	PROCESS_MEMORY_COUNTERS_EX info;
-	if (!GetProcessMemoryInfo(
-		GetCurrentProcess(),
-		(PROCESS_MEMORY_COUNTERS*)&info,
-		sizeof(info)
-	))
+	HANDLE currentProcess;
+	currentProcess = GetCurrentProcess();
+	if (!GetProcessMemoryInfo(GetCurrentProcess(),(PROCESS_MEMORY_COUNTERS*)&info,sizeof(info)))
 	{
+		CloseHandle(currentProcess);
 		return 0;
 	}
+	CloseHandle(currentProcess);
 	return info.PrivateUsage;
 }
