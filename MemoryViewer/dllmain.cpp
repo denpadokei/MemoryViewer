@@ -27,9 +27,11 @@ SIZE_T GetWorkingSet()
 	if (!GetProcessMemoryInfo(currentProcess, &info, sizeof(info)))
 	{
 		CloseHandle(currentProcess);
+		currentProcess = nullptr;
 		return 0;
 	}
 	CloseHandle(currentProcess);
+	currentProcess = nullptr;
 	return info.WorkingSetSize;
 }
 
@@ -38,11 +40,13 @@ SIZE_T GetCommitSize()
 	PROCESS_MEMORY_COUNTERS_EX info;
 	HANDLE currentProcess;
 	currentProcess = GetCurrentProcess();
-	if (!GetProcessMemoryInfo(GetCurrentProcess(),(PROCESS_MEMORY_COUNTERS*)&info,sizeof(info)))
+	if (!GetProcessMemoryInfo(currentProcess, (PROCESS_MEMORY_COUNTERS*)&info, sizeof(info)))
 	{
 		CloseHandle(currentProcess);
+		currentProcess = nullptr;
 		return 0;
 	}
 	CloseHandle(currentProcess);
+	currentProcess = nullptr;
 	return info.PrivateUsage;
 }
